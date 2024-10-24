@@ -11,10 +11,10 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font",
+     [ "expo-font",
         {
           "fonts": ["./assets/fonts/BeVietnam-Regular.ttf"]
-        }
+        }]
     ],
     "experiments": {
       "typedRoutes": true,

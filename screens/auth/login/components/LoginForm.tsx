@@ -1,7 +1,8 @@
-import { View, Text, TextInput, StyleSheet, Pressable, Alert } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomInput from './CustomInput'
 import Button from './Button'
+import { router } from 'expo-router'
 type Props = {}
 
 const LoginForm = (props: Props) => {
@@ -27,7 +28,10 @@ const LoginForm = (props: Props) => {
             Alert.alert('password should be length of 8 or More')
         }
         else {
-            
+            setNationald('')
+            setPassword('')
+
+            router?.navigate('/(tabs)/')
             return Alert.alert('Login Successfully')
         }
     }
