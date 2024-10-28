@@ -14,7 +14,12 @@ export default function TabLayout() {
         name='index'
         options={{
           title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerShown:false,
+          tabBarShowLabel :false,
+          tabBarLabelStyle:{
+            color:'blue'
+          },
+          tabBarIcon: ({ focused,color}) => <TabBarIcon name="google-wallet" color={focused ? 'blue' :"black"} />,
           headerRight: () => (
             <Link href='/modal' asChild>
                   <HeaderButton  />
@@ -23,10 +28,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name='profile'
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Tab One',
+          headerShown:false,
+          tabBarShowLabel :false,
+          tabBarLabelStyle:{
+            color:'blue'
+          },
+          tabBarIcon: ({ focused,color}) => <TabBarIcon name="user" color={focused ? 'blue' :"black"} />,
+          headerRight: () => (
+            <Link href='/modal' asChild>
+                  <HeaderButton  />
+            </Link>
+          ),
         }}
       />
     </Tabs>

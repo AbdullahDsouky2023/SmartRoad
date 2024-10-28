@@ -1,9 +1,11 @@
 import { StyleSheet, Text, TextInput, View } from "react-native"
+import { FONT_FAMILY_BOLD, FONT_FAMILY_NORMAL } from "~/constant/styles"
 type props =  {
     title:string
     placeholder:string
     text:string
     setText:(text:string)=>void
+    keyboardType?:string
 }
 
 
@@ -11,7 +13,8 @@ const CustomInput = ({
     title,
     placeholder,
     setText,
-    text
+    text,
+    keyboardType = 'default'
 }:props) => {
 
     return (
@@ -21,10 +24,11 @@ const CustomInput = ({
             </Text>
             <TextInput
             value = {text}
-    onChangeText={newText => {
-        setText(newText)
-        console.log(newText)
-    }}              
+            keyboardType={keyboardType}
+            onChangeText={newText => {
+                setText(newText)
+                console.log(newText)
+            }}              
       placeholder={placeholder}
                 style={styles?.textInput}
             />
@@ -43,11 +47,15 @@ const styles = StyleSheet.create({
         marginHorizontal:10,
         borderRadius:10,
         fontSize:20,
-        borderColor:'gray'
+        borderColor:'gray',
+        fontFamily:FONT_FAMILY_NORMAL,
+
     },
     label:{
         paddingHorizontal:15,
         marginVertical:20,
-        fontSize:20
+        fontSize:20,
+        fontFamily:FONT_FAMILY_BOLD,
+
     }
 });

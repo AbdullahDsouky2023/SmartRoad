@@ -1,17 +1,12 @@
 import { Stack } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
-import { Button } from '~/components/Button';
 
-import { ScreenContent } from '~/components/ScreenContent';
+import WalletScreen from '~/screens/wallet/WalletScreen';
 
 export default function Home() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Wallet Screen' }} />
-      <View style={styles.container}>
-        <ScreenContent path="app/(tabs)/index.tsx" title="Wallet Screen" />
-        <Button title='Create Wallet'/>
-      </View>
+     <WalletScreen/>
     </>
   );
 }

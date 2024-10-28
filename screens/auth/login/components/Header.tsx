@@ -1,5 +1,6 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
+import { FONT_FAMILY_BOLD } from '~/constant/styles'
 
 type Props = {}
 
@@ -30,6 +31,8 @@ const styles = StyleSheet.create({
         width:80
     },
     text:{
-        fontSize:35
+        fontSize:35,
+        fontFamily:FONT_FAMILY_BOLD,
+
     }
 });

@@ -3,33 +3,32 @@ import React, { useState } from 'react'
 import CustomInput from './CustomInput'
 import Button from './Button'
 import { router } from 'expo-router'
+import userProfileStore from '~/store/user'
 type Props = {}
 
 const LoginForm = (props: Props) => {
 
-    const [nationlId,setNationald]= useState('')
-    const [password,setPassword]= useState('')
+    const { nationalId,password,setNationalId,setPassword} = userProfileStore()
 
 
-    const dataComplted = nationlId  && password
+    const dataComplted = nationalId  && password
     const handelSubmit = ()=>{
-        if(!nationlId  && !password){
+        if(!nationalId  && !password){
             Alert.alert('Please Enter your national id')
-        }else if(nationlId && !password){
+        }else if(nationalId && !password){
             Alert.alert('Please Enter your password')
 
-        }else if(!nationlId && password){
+        }else if(!nationalId && password){
             Alert.alert('Please Enter your  national id ')
             
-        } else if(nationlId?.length < 10){
+        } else if(nationalId?.length < 10){
             Alert.alert('You have to enter the complete 10 national id')
         }
          else if(password?.length < 8){
             Alert.alert('password should be length of 8 or More')
         }
         else {
-            setNationald('')
-            setPassword('')
+          
 
             router?.navigate('/(tabs)/')
             return Alert.alert('Login Successfully')
@@ -43,8 +42,8 @@ const LoginForm = (props: Props) => {
         <CustomInput
         title='National Id'
          placeholder='National Id'
-         text={nationlId}
-         setText={setNationald}
+         text={nationalId}
+         setText={setNationalId}
         />
         <CustomInput
         title='Password'

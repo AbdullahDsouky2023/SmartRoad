@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
+import { FONT_FAMILY_BOLD } from '~/constant/styles'
 
 type Props = {
     onPress:()=>void
@@ -22,7 +23,8 @@ const Button = ({
         <Text
         style={{
             color:'white',
-            fontSize:20
+            fontSize:20,        fontFamily:FONT_FAMILY_BOLD,
+
         }}
         >
             {title}

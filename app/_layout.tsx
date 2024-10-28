@@ -8,16 +8,7 @@ import { useFonts } from 'expo-font';
 
 
 export default function RootLayout() {
-	const [loaded] = useFonts({
-        BeVietnam:require('../assets/fonts/BeVietnam-Regular.ttf'),
-        BoldBeVietnam:require('../assets/fonts/BeVietnam-Bold.ttf'),
-      });
-	  console.log('font laed',loaded)
-      useEffect(()=>{
-            if(loaded){
-                SplashScreen?.hideAsync()
-            }
-      },[loaded])
+	
 	return (
 		<SafeAreaView style={{
 			flex:1
@@ -30,6 +21,13 @@ export default function RootLayout() {
 			name='loginScreen'
 			options={{
 				headerShown:false
+			}}
+			/>
+			<Stack.Screen
+			name='chargeWallet'
+			options={{
+				headerShown:false,
+				presentation:'modal'
 			}}
 			/>
 		</Stack>
