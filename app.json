@@ -11,10 +11,14 @@
     },
     "plugins": [
       "expo-router",
-     [ "expo-font",
+      [
+        "expo-font",
         {
-          "fonts": ["./assets/fonts/BeVietnam-Regular.ttf"]
-        }]
+          "fonts": [
+            "./assets/fonts/BeVietnam-Regular.ttf"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
@@ -38,6 +42,15 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.abdallah_1dsouky.SmartRoad"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "8f8e5f77-05bc-41eb-a6b7-a68ac5673bf9"
       }
     }
   }
