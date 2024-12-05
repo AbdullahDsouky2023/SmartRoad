@@ -4,11 +4,14 @@ import CustomInput from './CustomInput'
 import Button from './Button'
 import { router } from 'expo-router'
 import userProfileStore from '~/store/user'
-type Props = {}
+import { LoginUser, StoreUser } from '~/api/user'
+type Props = {
+    hasAccount:boolean
+}
 
-const LoginForm = (props: Props) => {
+const LoginForm = ({hasAccount}: Props) => {
 
-    const { nationalId,password,setNationalId,setPassword} = userProfileStore()
+    const { nationalId,password,setNationalId,setPassword,name,setName} = userProfileStore()
 
 
     const dataComplted = nationalId  && password
@@ -34,11 +37,42 @@ const LoginForm = (props: Props) => {
             return Alert.alert('Login Successfully')
         }
     }
+    const Register = async ()=>{
+        try{
+            const response = await StoreUser(
+                name,
+                nationalId,
+                password
+            )
+            //handle suuces navigation and store date in backend
+        }catch(error){
+            console.log('error login',error)
+        }
+    }
+    const Login = async ()=>{
+        try{
+            const response = await LoginUser(
+                nationalId,
+                password
+            )
+            //handle suuces navigation and store date in backend
+        }catch(error){
+            console.log('error login',error)
+        }
+    }
   return (
     <View className='bg-red-400'
     style={styles?.container}
     >
-      
+      {
+        !hasAccount &&
+        <CustomInput
+        title='Name'
+        placeholder='Name'
+        text={name}
+        setText={setName}
+        />
+    }
         <CustomInput
         title='National Id'
          placeholder='National Id'
@@ -52,9 +86,9 @@ const LoginForm = (props: Props) => {
          setText={setPassword}
         />
         <Button
-        title='Login'
+        title={ hasAccount ? 'Login' : 'Register'}
         disabled={dataComplted}
-        onPress={handelSubmit}
+        onPress={hasAccount ? Login : Register}
         />
        
 
