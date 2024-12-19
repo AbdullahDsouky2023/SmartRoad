@@ -3,7 +3,7 @@ import { View } from "react-native"
 
 const Header = ()=>{
     return (
-        <View>
+        <View className="bg-red-400">
         <Text 
         style={{
             fontSize:25,

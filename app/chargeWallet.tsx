@@ -3,10 +3,14 @@ import React from 'react'
 import ChargeWalletScreen from '~/screens/wallet/ChargeWalletScreen'
 
 type Props = {}
+import BottomSheet from 'react-native-simple-bottom-sheet';
 
 const chargeWallet = (props: Props) => {
   return (
-    <ChargeWalletScreen/>
+    <View style={{flex: 1}}>
+     <ChargeWalletScreen/>
+    
+    </View>
   )
 }
 

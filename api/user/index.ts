@@ -106,6 +106,7 @@ export const StoreUser = async ( name:string,
         data.append('password', password);
 
       const response = await  api.post('users', data)    
+      console.log('store user value ',response?.data)
       return response?.data
     }catch(error){
         console.error('Error  get all users',error)

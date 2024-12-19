@@ -4,7 +4,9 @@ import { FONT_FAMILY_BOLD, FONT_FAMILY_NORMAL } from '~/constant/styles'
 import { Entypo } from '@expo/vector-icons'
 import useWalletStore from '../../../store/wallet'
 import userProfileStore from '~/store/user'
+import AddCharge from '~/components/wallet/AddCharge'
 type Props = {}
+// ../../../components/wallet/AddCharge
 
 const {width,height} = Dimensions.get('window')
 const WalletComponent = (props: Props) => {
@@ -17,6 +19,7 @@ const WalletComponent = (props: Props) => {
     >
       <BlanceComponent balance={balance}/>
       <UserWalletComponent/>
+      <AddCharge/>
     </View>
   )
 }
@@ -54,7 +57,7 @@ const BlanceComponent = ({
 }
 
 const UserWalletComponent = ()=>{
-  const { nationalId} = userProfileStore()
+  const { nationalId,name} = userProfileStore()
     return(
         <View
       style={{
@@ -74,7 +77,7 @@ const UserWalletComponent = ()=>{
             fontSize:20
         }}
         >
-            Ali Samer Mohamed
+            {name}
         </Text>
         <Text
         style={{

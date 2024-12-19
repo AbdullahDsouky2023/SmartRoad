@@ -81,6 +81,7 @@ const LoginForm = ({hasAccount}: Props) => {
         />
         <CustomInput
         title='Password'
+        password={true}
          placeholder='Password'
          text={password}
          setText={setPassword}

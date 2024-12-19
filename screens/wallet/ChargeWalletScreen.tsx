@@ -5,6 +5,7 @@ import Button from '../auth/login/components/Button'
 import { FONT_FAMILY_BOLD } from '~/constant/styles'
 import useWalletStore from '~/store/wallet'
 import { router } from 'expo-router'
+import BottomSheet from 'react-native-simple-bottom-sheet';
 
 type Props = {}
 
@@ -59,6 +60,7 @@ const ChargeWalletScreen = (props: Props) => {
         </Text>
         
       }
+    
     </View>
   )
 }

@@ -30,6 +30,13 @@ export default function RootLayout() {
 				presentation:'modal'
 			}}
 			/>
+			<Stack.Screen
+			name='successCharge'
+			options={{
+				headerShown:false,
+				presentation:'transparentModal'
+			}}
+			/>
 		</Stack>
 		</SafeAreaView>
 

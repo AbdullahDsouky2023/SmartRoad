@@ -6,6 +6,7 @@ type props =  {
     text:string
     setText:(text:string)=>void
     keyboardType?:string
+    password?:boolean
 }
 
 
@@ -14,7 +15,8 @@ const CustomInput = ({
     placeholder,
     setText,
     text,
-    keyboardType = 'default'
+    keyboardType = 'default',
+    password= false
 }:props) => {
 
     return (
@@ -24,7 +26,8 @@ const CustomInput = ({
             </Text>
             <TextInput
             value = {text}
-            keyboardType={keyboardType}
+    secureTextEntry={password}         
+         keyboardType={keyboardType}
             onChangeText={newText => {
                 setText(newText)
                 console.log(newText)
