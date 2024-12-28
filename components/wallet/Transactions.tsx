@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native'
 import React from 'react'
 import { Feather } from '@expo/vector-icons'
 import BottomSheet from 'react-native-simple-bottom-sheet';
+import { Transaction, useTransactions } from '~/api/transactions';
 
 type Props = {}
 
@@ -50,7 +51,7 @@ interface Item  {
     color: string
 }
 const TranctionItem = ({item}:{
-    item:Item
+    item:Transaction
 }) => {
     return (
         <View style={{
@@ -66,7 +67,7 @@ const TranctionItem = ({item}:{
         }}>
             <Feather name="arrow-down-right" size={24} color="white" style={
                 {
-                    backgroundColor: item.color,
+                    backgroundColor: 'blue',
                     margin: 5,
                     width: 50,
                     padding: 10,
@@ -93,7 +94,7 @@ const TranctionItem = ({item}:{
                             fontWeight: 600
                         }}
                     >
-                       {item.type}
+                       {item?.transaction_type}
                     </Text>
                     <Text
                         style={{
@@ -104,7 +105,7 @@ const TranctionItem = ({item}:{
                             fontWeight: 600
                         }}
                     >
-                        {item.date}
+                        {item?.transaction_date}
                     </Text>
                 </View>
                 <Text
@@ -116,7 +117,7 @@ const TranctionItem = ({item}:{
                         fontWeight: 600
                     }}
                 >
-                    {item?.amount}
+                    {item?.amount} EGP
                 </Text>
               
             </View>
@@ -127,41 +128,14 @@ const TranctionItem = ({item}:{
 
 
 const TransactionsList = ()=>{
-    const transactions = [
-        {
-            id: 1,
-            date: "15/11/2024",
-            amount: "25 $",
-            type: "Add Via Visa",
-            color: "blue"
-        },
-        {
-            id: 2,
-            date: "10/10/2023",
-            amount: "50 $",
-            type: "Withdrawal",
-            color: "red"
-        },
-        {
-            id: 3,
-            date: "05/09/2023",
-            amount: "100 $",
-            type: "Transfer",
-            color: "green"
-        },
-        {
-            id: 4,
-            date: "01/08/2023",
-            amount: "75 $",
-            type: "Add Via Mastercard",
-            color: "blue"
-        }
-    ];
+    const {transactions,isLoading,refetch} = useTransactions()
+    console.log('transaction2222∂s',transactions)
     return(
         <FlatList
         data={transactions}
         ListEmptyComponent={<EmptyTransactions/>}
         showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch}/>}
         contentContainerStyle={{
             paddingBottom:500
         }}

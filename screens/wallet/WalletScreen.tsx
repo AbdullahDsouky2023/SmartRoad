@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ActivityIndicator } from 'react-native'
+import { View, Text, FlatList, ActivityIndicator, ScrollView, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from './components/Header'
 import WalletComponent from './components/WalletComponent'
@@ -9,10 +9,13 @@ import Transactions from '~/components/wallet/Transactions'
 type Props = {}
 import BottomSheet from 'react-native-simple-bottom-sheet';
 import { AntDesign } from '@expo/vector-icons'
+import { useWallet } from '~/api/wallet'
 
 const WalletScreen = (props: Props) => {
+  const {wallet,refetch,isLoading} = useWallet()
   return (
-    <View 
+    <ScrollView 
+    refreshControl={<RefreshControl onRefresh={refetch} refreshing={isLoading}/>}
     style={{
         backgroundColor:'white',
         flex:1
@@ -30,7 +33,7 @@ const WalletScreen = (props: Props) => {
       </BottomSheet> */}
    {/* <Users/> */}
    
-    </View>
+    </ScrollView>
   )
 }
 

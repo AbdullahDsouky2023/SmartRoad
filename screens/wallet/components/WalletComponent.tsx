@@ -1,23 +1,23 @@
 import { View, Text, Dimensions, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FONT_FAMILY_BOLD, FONT_FAMILY_NORMAL } from '~/constant/styles'
 import { Entypo } from '@expo/vector-icons'
 import useWalletStore from '../../../store/wallet'
 import userProfileStore from '~/store/user'
 import AddCharge from '~/components/wallet/AddCharge'
+import { useWallet } from '~/api/wallet'
+import { getAllUsers, getUserData } from '~/api/user'
 type Props = {}
-// ../../../components/wallet/AddCharge
 
 const {width,height} = Dimensions.get('window')
 const WalletComponent = (props: Props) => {
-    const { balance} =useWalletStore()
 
     
   return (
     <View
     style={styles.container}
     >
-      <BlanceComponent balance={balance}/>
+      <BlanceComponent/>
       <UserWalletComponent/>
       <AddCharge/>
     </View>
@@ -36,12 +36,10 @@ const styles = StyleSheet.create({
         display:'flex',
     }
 })
-const BlanceComponent = ({
-    balance
-}:{
-    balance:string
-})=>{
-    return(
+const BlanceComponent = ()=>{
+  const {wallet,isLoading} = useWallet()
+  console.log('ffwallet ',wallet)
+  return(
         <Text
       style={{
         fontFamily:FONT_FAMILY_BOLD,
@@ -51,14 +49,17 @@ const BlanceComponent = ({
         paddingVertical:10
       }}
       >
-        ${balance}
+        ${wallet?.data[0]?.balance}
       </Text>
     )
 }
 
+
+
 const UserWalletComponent = ()=>{
-  const { nationalId,name} = userProfileStore()
-    return(
+  const {name,nationalId} = userProfileStore()
+  // console.log('userData',userData)
+  return(
         <View
       style={{
         paddingHorizontal:15,
@@ -86,8 +87,8 @@ const UserWalletComponent = ()=>{
             fontSize:20
         }}
         >
-          {nationalId}
-        </Text>
+            {nationalId}
+            </Text>
             </View>
         <Entypo name="wallet" size={50} color="white" />
       </View>

@@ -55,6 +55,7 @@ const LoginForm = ({hasAccount}: Props) => {
                 nationalId,
                 password
             )
+            console.log('response',response)
             //handle suuces navigation and store date in backend
         }catch(error){
             console.log('error login',error)
