@@ -36,7 +36,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.abdullahdsouky3.SmartRoad"
     },
     "android": {
       "adaptiveIcon": {

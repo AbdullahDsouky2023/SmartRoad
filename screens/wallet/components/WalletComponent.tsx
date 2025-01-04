@@ -37,9 +37,10 @@ const styles = StyleSheet.create({
     }
 })
 const BlanceComponent = ()=>{
-  const {wallet,isLoading} = useWallet()
-  console.log('ffwallet ',wallet)
-  if(isLoading) return <Text>Loading....</Text>
+  const {user_id} = userProfileStore()
+  const {wallet,refetch,isLoading} = useWallet(user_id)
+  console.log("🚀 ~ WalletScreen ~ data:", wallet)
+    if(isLoading) return <Text>Loading....</Text>
   return(
         <Text
       style={{
@@ -50,7 +51,7 @@ const BlanceComponent = ()=>{
         paddingVertical:10
       }}
       >
-        {/* ${wallet?.data[0]?.balance} */}
+        {wallet?.current_balance} $
       </Text>
     )
 }
@@ -58,8 +59,8 @@ const BlanceComponent = ()=>{
 
 
 const UserWalletComponent = ()=>{
-  const {fullName,nationalId} = userProfileStore()
-  console.log("🚀 ~ UserWalletComponent ~ nationalId:", nationalId)
+  const {full_name,national_id} = userProfileStore()
+  console.log("🚀 ~ UserWalletComponent ~ nationalId:", national_id)
   // console.log('userData',userData)
   return(
         <View
@@ -80,7 +81,7 @@ const UserWalletComponent = ()=>{
             fontSize:20
         }}
         >
-            {fullName}
+            {full_name}
         </Text>
         <Text
         style={{
@@ -89,7 +90,7 @@ const UserWalletComponent = ()=>{
             fontSize:20
         }}
         >
-            {nationalId}
+            {national_id}
             </Text>
             </View>
         <Entypo name="wallet" size={50} color="white" />

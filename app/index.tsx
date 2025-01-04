@@ -25,8 +25,8 @@ const index = (props: Props) => {
   });
 
   const [isLoading, setIsLoading] = useState(false)
-  const { setUser,email,nationalId,userId } = userProfileStore()
-  console.log("🚀 ~ index ~ userId:", userId,nationalId,email)
+  const { setUser,email,national_id,user_id } = userProfileStore()
+  console.log("🚀 ~ index ~ userId:", user_id,national_id,email)
   const [redirectTo, setRedirectTo] = useState<string | null>(null);
 
 

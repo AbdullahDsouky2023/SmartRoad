@@ -10,9 +10,13 @@ type Props = {}
 import BottomSheet from 'react-native-simple-bottom-sheet';
 import { AntDesign } from '@expo/vector-icons'
 import { useWallet } from '~/api/wallet'
+import TransactionList from './components/TransactionsList'
+import userProfileStore from '~/store/user'
 
 const WalletScreen = (props: Props) => {
-  const {wallet,refetch,isLoading} = useWallet()
+  const {user_id} = userProfileStore()
+  const {wallet,refetch,isLoading} = useWallet(user_id)
+  console.log("🚀 ~ WalletScreen ~ data:", wallet)
   return (
     <ScrollView 
     refreshControl={<RefreshControl onRefresh={refetch} refreshing={isLoading}/>}
@@ -23,7 +27,7 @@ const WalletScreen = (props: Props) => {
     >
     <Header/>
     <WalletComponent/>
-    <Transactions/>
+    <TransactionList/>
     {/* <BottomSheet isOpen>
     <AntDesign name="staro" size={24} />
        <Text>
@@ -41,61 +45,3 @@ export default WalletScreen
 
 
 
-
-const Users = ()=>{
-  const [users,setUsers] = useState(null)
-  const [loading,setLoading] = useState(false)
-  useEffect(()=>{
-    getUsersFromApi()
-  },[])
-  const getUsersFromApi = async()=>{
-    try{
-      setLoading(true)
-      const users =await getAllUsers()//users
-      if(users){
-        // console.log('users',users)
-        setUsers(users)
-      }
-    }catch(err){
-      console.error('error getging user from  api ',err)
-    }finally{
-      setLoading(false)
-    }
-  }
-  return(
-    <View style={{
-      flex:1
-    }}>
-         {
-        !loading &&
-      <ActivityIndicator color={'blue'} size={150}/>
-      }
-      <FlatList
-      data={users}
-      contentContainerStyle={{
-        flex:1,
-        display:'flex',
-        gap:4
-      }}
-
-      renderItem={(user:User)=>{
-        return(
-          <View className='py-4 bg-red-400 rounded-full'
-          style={{
-            backgroundColor:'red'
-          }}
-          >
-            <Text className='text-red-400 text-5xl'
-            
-            >
-              {user?.item?.username}
-            </Text>
-            </View>
-        )
-      }}  
-      />
-   
-
-    </View>
-  )
-}

@@ -1,19 +1,20 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { mmkvStorage } from './services';
+
 
 interface UserState {
-  userId: string;
-  fullName: string;
-  nationalId: string;
-  phoneNumber: string;
+  user_id: string;
+  full_name: string;
+  national_id: string;
+  phone_number: string;
   email: string;
   password: string;
   address: string;
   status: string;
-  registrationDate: string;
+  registration_date: string;
   lastLogin: string;
-  preferredLanguage: string;
+  preferred_language: string;
   setUser: (data: Partial<UserState>) => void;
   setUserField: (field: keyof UserState, value: any) => void;
   reset: () => void;
@@ -21,17 +22,17 @@ interface UserState {
 }
 
 const initialState: Omit<UserState, 'setUser' | 'setUserField' | 'reset' | 'clearAll'> = {
-  userId: '',
-  fullName: '',
-  nationalId: '',
-  phoneNumber: '',
+  user_id: '',
+  full_name: '',
+  national_id: '',
+  phone_number: '',
   email: '',
   password: '',
   address: '',
   status: '',
-  registrationDate: '',
+  registration_date: '',
   lastLogin: '',
-  preferredLanguage: '',
+  preferred_language: '',
 };
 
 const userProfileStore = create<UserState>()(
@@ -42,23 +43,23 @@ const userProfileStore = create<UserState>()(
       setUserField: (field, value) => set((state) => ({ ...state, [field]: value })),
       reset: () => set(() => initialState),
       clearAll: () => {
-        AsyncStorage.clear().then(() => set(() => initialState));
+        set(() => initialState)
       }
     }),
     {
       name: 'user-storage',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => mmkvStorage),
       partialize: (state) => ({
-        userId: state.userId,
-        fullName: state.fullName,
-        nationalId: state.nationalId,
-        phoneNumber: state.phoneNumber,
+        user_id: state.user_id,
+        full_name: state.full_name,
+        national_id: state.national_id,
+        phone_number: state.phone_number,
         email: state.email,
         address: state.address,
         status: state.status,
-        registrationDate: state.registrationDate,
+        registration_date: state.registration_date,
         lastLogin: state.lastLogin,
-        preferredLanguage: state.preferredLanguage,
+        preferred_language: state.preferred_language,
       }),
     }
   )

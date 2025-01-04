@@ -1,6 +1,5 @@
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-import api from '..';
+import { supabase } from '~/lib/supabase';
 
 interface Wallet {
   id: number;
@@ -10,12 +9,21 @@ interface Wallet {
   updated_at: string | null;
 }
 
-const fetchWallet = async (): Promise<Wallet> => {
-  const { data } = await api.get('/wallet');
+const fetchWallet = async (userId: number): Promise<Wallet | null> => {
+  const { data, error } = await supabase
+    .from('wallets')
+    .select('*')
+    .eq('user_id', userId)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
   return data;
 };
 
-export const useWallet = () => {
+export const useWallet = (userId: number) => {
   const {
     data: wallet,
     isLoading,
@@ -23,8 +31,8 @@ export const useWallet = () => {
     error,
     refetch
   } = useQuery({
-    queryKey: ['wallet'],
-    queryFn: fetchWallet,
+    queryKey: ['wallet', userId],
+    queryFn: () => fetchWallet(userId),
     staleTime: 1000 * 60 * 5, // Consider data stale after 5 minutes
     retry: 2, // Retry failed requests twice
   });

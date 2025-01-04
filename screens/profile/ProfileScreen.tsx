@@ -31,32 +31,7 @@ const ProfileScreen = (props: Props) => {
         backgroundColor:'white'
     }}
     >
-      <View>
-        <Text
-        style={{
-          fontFamily:FONT_FAMILY_BOLD,
-          fontSize:40,
-          color:'blue'
-        }}
-        >
-          My Balance
-        </Text>
-        <Text
-        style={{
-          fontFamily:FONT_FAMILY_BOLD,
-          fontSize:40,
-          color:'white',
-          textAlign:'center',
-          backgroundColor:'green',
-          borderRadius:20,
-          paddingVertical:10,
-          marginVertical:20,
-          overflow:'hidden'
-        }}
-        >
-         {balance} $
-        </Text>
-      </View>
+   
       <Button disabled={true} title='ChargeWallet' onPress={handelChargeWallet}/>
       <Button disabled={true} title='Logout' onPress={handleSignout}/>
     </View>
