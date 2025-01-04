@@ -4,16 +4,21 @@ import Button from '../auth/login/components/Button'
 import { router } from 'expo-router'
 import { FONT_FAMILY_BOLD } from '~/constant/styles'
 import useWalletStore from '~/store/wallet'
+import userProfileStore from '~/store/user'
 
 type Props = {}
 
 const ProfileScreen = (props: Props) => {
   const {balance} = useWalletStore()
+  const {setUser,clearAll} = userProfileStore()
     const handelChargeWallet = ()=>{
         router?.navigate('/chargeWallet')
         console.log('charge wallet')
     }
     const handleSignout = ()=>{
+      setUser(null)
+      clearAll()
+      
         router?.navigate('/loginScreen')
     }
   return (

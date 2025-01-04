@@ -1,121 +1,142 @@
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
-import React, { useState } from 'react'
-import CustomInput from './CustomInput'
-import Button from './Button'
-import { router } from 'expo-router'
-import userProfileStore from '~/store/user'
-import { LoginUser, StoreUser } from '~/api/user'
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
+import React, { useState } from 'react';
+import CustomInput from './CustomInput';
+import Button from './Button';
+import { router } from 'expo-router';
+import userProfileStore from '~/store/user';
+import { supabase } from '~/lib/supabase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 type Props = {
-    hasAccount:boolean
-}
+    hasAccount: boolean;
+};
 
-const LoginForm = ({hasAccount}: Props) => {
+const LoginForm = ({ hasAccount }: Props) => {
+    const { email, password, setUserField , setUser } = userProfileStore();
+    const dataCompleted = email && password;
 
-    const { nationalId,password,setNationalId,setPassword,name,setName} = userProfileStore()
-
-
-    const dataComplted = nationalId  && password
-    const handelSubmit = ()=>{
-        if(!nationalId  && !password){
-            Alert.alert('Please Enter your national id')
-        }else if(nationalId && !password){
-            Alert.alert('Please Enter your password')
-
-        }else if(!nationalId && password){
-            Alert.alert('Please Enter your  national id ')
-            
-        } else if(nationalId?.length < 10){
-            Alert.alert('You have to enter the complete 10 national id')
+    const handleValidation = () => {
+        if (!email && !password) {
+            Alert.alert('Please Enter your email');
+            return false;
+        } else if (email && !password) {
+            Alert.alert('Please Enter your password');
+            return false;
+        } else if (!email && password) {
+            Alert.alert('Please Enter your email');
+            return false;
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            Alert.alert('Please enter a valid email address');
+            return false;
+        } else if (password?.length < 8) {
+            Alert.alert('Password should be length of 8 or more');
+            return false;
         }
-         else if(password?.length < 8){
-            Alert.alert('password should be length of 8 or More')
-        }
-        else {
-          
+        return true;
+    };
 
-            router?.navigate('/(tabs)/')
-            return Alert.alert('Login Successfully')
-        }
-    }
-    const Register = async ()=>{
-        try{
-            const response = await StoreUser(
-                name,
-                nationalId,
-                password
-            )
-            //handle suuces navigation and store date in backend
-        }catch(error){
-            console.log('error login',error)
-        }
-    }
-    const Login = async ()=>{
-        try{
-            const response = await LoginUser(
-                nationalId,
-                password
-            )
-            console.log('response',response)
-            //handle suuces navigation and store date in backend
-        }catch(error){
-            console.log('error login',error)
-        }
-    }
-  return (
-    <View className='bg-red-400'
-    style={styles?.container}
-    >
-      {
-        !hasAccount &&
-        <CustomInput
-        title='Name'
-        placeholder='Name'
-        text={name}
-        setText={setName}
-        />
-    }
-        <CustomInput
-        title='National Id'
-         placeholder='National Id'
-         text={nationalId}
-         setText={setNationalId}
-        />
-        <CustomInput
-        title='Password'
-        password={true}
-         placeholder='Password'
-         text={password}
-         setText={setPassword}
-        />
-        <Button
-        title={ hasAccount ? 'Login' : 'Register'}
-        disabled={dataComplted}
-        onPress={hasAccount ? Login : Register}
-        />
-       
+    const Register = async () => {
+        try {
+            if (!handleValidation()) return;
 
-    </View>
-  )
-}
+            // First create the auth user
+            const { data: authData, error: authError } = await supabase.auth.signUp({
+                email,
+                password,
+            });
 
-export default LoginForm
+            if (authError) throw authError;
+
+            if (authData.user) {
+                // Then insert the user data into your users table
+                const { data, error } = await supabase
+                    .from('users')
+                    .insert([
+                        {
+                            user_id: authData.user.id,
+                            email: email,
+                        }
+                    ]);
+
+                if (error) throw error;
+
+                Alert.alert('Registration successful! Please check your email for verification.');
+            }
+        } catch (error: any) {
+            console.error('Error registering:', error.message);
+            Alert.alert('Registration failed', error.message);
+        }
+    };
+
+    const Login = async () => {
+        try {
+            if (!handleValidation()) return;
+
+            // Authenticate user and get session
+            const { data: userData, error: userError } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', email)
+            .single();
+            console.log("🚀 ~ Login ~ userData:", userData)
+
+            if (userData) {
+                if (userError) throw userError;
+                setUser(userData);
+                
+
+                // Navigate to the next screen
+                router.navigate('/(tabs)/');
+                Alert.alert('Login Successful');
+            }
+                    console.log("🚀 ~ Login ~ userData:", userData)
+        } catch (error: any) {
+            console.error('Error logging in:', error.message);
+            Alert.alert('Login failed', error.message);
+        }
+    };
+
+    return (
+        <View className='bg-red-400' style={styles?.container}>
+            <CustomInput
+                title='Email'
+                placeholder='Email'
+                text={email}
+                setText={(value) => setUserField('email', value)}
+            />
+            <CustomInput
+                title='Password'
+                password={true}
+                placeholder='Password'
+                text={password}
+                setText={(value) => setUserField('password', value)}
+            />
+            <Button
+                title={hasAccount ? 'Login' : 'Register'}
+                disabled={dataCompleted}
+                onPress={hasAccount ? Login : Register}
+            />
+        </View>
+    );
+};
+
+export default LoginForm;
 
 const styles = StyleSheet.create({
-    container:{
-        marginTop:20
+    container: {
+        marginTop: 20
     },
-    textInput:{
-        borderWidth:1,
-        padding:10,
-        marginHorizontal:10,
-        borderRadius:10,
-        fontSize:20,
-        borderColor:'gray'
+    textInput: {
+        borderWidth: 1,
+        padding: 10,
+        marginHorizontal: 10,
+        borderRadius: 10,
+        fontSize: 20,
+        borderColor: 'gray'
     },
-    label:{
-        paddingHorizontal:15,
-        marginVertical:20,
-        fontSize:20
+    label: {
+        paddingHorizontal: 15,
+        marginVertical: 20,
+        fontSize: 20
     },
-   
 });

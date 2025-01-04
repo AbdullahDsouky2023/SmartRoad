@@ -2,20 +2,21 @@ import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Redirect, SplashScreen } from 'expo-router'
 import { useFonts } from 'expo-font'
-import { getUserData } from '~/api/user'
+import { createClient } from '@supabase/supabase-js'
 import userProfileStore from '~/store/user'
+import { supabase } from '~/lib/supabase'
 
 type Props = {}
 
-// SplashScreen.preventAutoHideAsync();
 interface UserData {
   id: number;
   name: string;
   National_number: string;
   email_verified_at: string | null;
   created_at: string | null;
-  updated_at: string | null;
+  updated_at: string | null; 
 }
+
 
 const index = (props: Props) => {
   const [loaded] = useFonts({
@@ -23,34 +24,28 @@ const index = (props: Props) => {
     BoldBeVietnam:require('../assets/fonts/BeVietnam-Bold.ttf'),
   });
 
-  // const [userData, setUserData] = useState<UserData | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const {setNationalId,setName} = userProfileStore()
+  const { setUser,email,nationalId,userId } = userProfileStore()
+  console.log("🚀 ~ index ~ userId:", userId,nationalId,email)
+  const [redirectTo, setRedirectTo] = useState<string | null>(null);
+
+
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true)
-      try {
-        const data = await getUserData(1)
-        // setUserData(data)
-        setName(data?.name)
-        setNationalId(data?.National_number)
-      } catch (error) {
-        console.error('Error fetching user data:', error)
-      } finally {
-        setIsLoading(false)
-      }
+    if (loaded) {
+      SplashScreen?.hideAsync()
     }
+  }, [loaded])
 
-    fetchData()
-  }, [])
-console.log('font laed',loaded)
-  useEffect(()=>{
-        if(loaded){
-            SplashScreen?.hideAsync()
-        }
-  },[loaded])
+  console.log("🚀 ~ index ~ redirectTo:", redirectTo)
+  if (!email) {
+    console.log("🚀 ~ index ~ userId:", email)
+    return <Redirect href={'/loginScreen'} />
+  }else {
+      return <Redirect href={'/(tabs)/'} />
 
-  return <Redirect href={'/(tabs)/'}/>
+  }
+
+  // return <Redirect href={'/(tabs)/'} />
 }
 
 export default index

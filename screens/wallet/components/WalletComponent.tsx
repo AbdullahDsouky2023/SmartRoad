@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
 const BlanceComponent = ()=>{
   const {wallet,isLoading} = useWallet()
   console.log('ffwallet ',wallet)
+  if(isLoading) return <Text>Loading....</Text>
   return(
         <Text
       style={{
@@ -49,7 +50,7 @@ const BlanceComponent = ()=>{
         paddingVertical:10
       }}
       >
-        ${wallet?.data[0]?.balance}
+        {/* ${wallet?.data[0]?.balance} */}
       </Text>
     )
 }
@@ -57,7 +58,8 @@ const BlanceComponent = ()=>{
 
 
 const UserWalletComponent = ()=>{
-  const {name,nationalId} = userProfileStore()
+  const {fullName,nationalId} = userProfileStore()
+  console.log("🚀 ~ UserWalletComponent ~ nationalId:", nationalId)
   // console.log('userData',userData)
   return(
         <View
@@ -78,7 +80,7 @@ const UserWalletComponent = ()=>{
             fontSize:20
         }}
         >
-            {name}
+            {fullName}
         </Text>
         <Text
         style={{
