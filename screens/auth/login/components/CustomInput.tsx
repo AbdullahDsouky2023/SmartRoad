@@ -1,5 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from "react-native"
+import AppText from "~/components/AppText"
 import { FONT_FAMILY_BOLD, FONT_FAMILY_NORMAL } from "~/constant/styles"
+import i18n from "~/localization/localize"
 type props =  {
     title:string
     placeholder:string
@@ -21,9 +23,7 @@ const CustomInput = ({
 
     return (
         <View>
-            <Text style={styles.label}>
-              {title}
-            </Text>
+           <AppText textKey={title} FValue={14} style={styles.label}/>
             <TextInput
             value = {text}
     secureTextEntry={password}         
@@ -32,7 +32,7 @@ const CustomInput = ({
                 setText(newText)
                 console.log(newText)
             }}              
-      placeholder={placeholder}
+      placeholder={i18n.t(placeholder)}
                 style={styles?.textInput}
             />
 

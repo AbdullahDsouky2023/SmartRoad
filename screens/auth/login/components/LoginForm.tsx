@@ -6,6 +6,7 @@ import { router } from 'expo-router';
 import userProfileStore from '~/store/user';
 import { supabase } from '~/lib/supabase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18n from '~/localization/localize';
 
 type Props = {
     hasAccount: boolean;
@@ -17,19 +18,19 @@ const LoginForm = ({ hasAccount }: Props) => {
 
     const handleValidation = () => {
         if (!email && !password) {
-            Alert.alert('Please Enter your email');
+            Alert.alert(i18n.t('Please Enter your email'));
             return false;
         } else if (email && !password) {
-            Alert.alert('Please Enter your password');
+            Alert.alert((i18n.t('Please Enter your password')));
             return false;
         } else if (!email && password) {
-            Alert.alert('Please Enter your email');
+            Alert.alert((i18n.t('Please Enter your email')));
             return false;
         } else if (!/\S+@\S+\.\S+/.test(email)) {
-            Alert.alert('Please enter a valid email address');
+            Alert.alert((i18n.t('Please enter a valid email address')));
             return false;
         } else if (password?.length < 8) {
-            Alert.alert('Password should be length of 8 or more');
+            Alert.alert((i18n.t('Password should be length of 8 or more')));
             return false;
         }
         return true;

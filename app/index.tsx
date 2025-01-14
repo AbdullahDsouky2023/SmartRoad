@@ -26,7 +26,12 @@ const index = (props: Props) => {
 
   const [isLoading, setIsLoading] = useState(false)
   const { setUser,email,national_id,user_id } = userProfileStore()
-  console.log("🚀 ~ index ~ userId:", user_id,national_id,email)
+  
+  const getUser = async()=>{
+    const supbaseUser = await supabase?.auth?.getUser()
+    return supbaseUser
+  }
+  console.log("🚀 ~ index ~ userId:", user_id,national_id,email,getUser())
   const [redirectTo, setRedirectTo] = useState<string | null>(null);
 
 

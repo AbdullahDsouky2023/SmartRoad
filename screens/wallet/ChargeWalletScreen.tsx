@@ -8,6 +8,7 @@ import BottomSheet from 'react-native-simple-bottom-sheet';
 import { useWallet } from '~/api/wallet'
 import userProfileStore from '~/store/user'
 import { supabase } from '~/lib/supabase'
+import AppText from '~/components/AppText'
 
 type Props = {}
 
@@ -62,15 +63,14 @@ const ChargeWalletScreen = (props: Props) => {
             />
             {
                 Number(text) <= 10 &&
-                <Text
+                <AppText
                     style={{
                         fontFamily: FONT_FAMILY_BOLD,
                         color: 'red',
                         textAlign: 'center'
                     }}
-                >
-                    Please Charge with more than 10$
-                </Text>
+                 textKey='Please Charge with more than 10$'
+                />
             }
         </View>
     )

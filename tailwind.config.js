@@ -26,8 +26,11 @@ module.exports = {
           'white20':'rgba(255,255,255,0.2)',
           'Background':'#000000',
           'Surface':'#ffffff',
-          'mainFont':'BeVietnam',
-      },
+        },
+        fontFamily: {
+          'main': ['BeVietnam', 'sans-serif'],
+          'bold': ['BoldBeVietnam', 'sans-serif'],
+        },
       },
     },
     plugins: [],

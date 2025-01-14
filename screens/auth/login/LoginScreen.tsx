@@ -4,56 +4,90 @@ import Header from './components/Header'
 import LoginForm from './components/LoginForm'
 import { Link } from 'expo-router'
 import { FONT_FAMILY_BOLD, FONT_FAMILY_NORMAL } from '~/constant/styles'
+import { changeLanguage } from '~/localization/helpers'
+import { getLocale } from '~/localization/localize'
+import { FontAwesome } from '@expo/vector-icons'
+import AppText from '~/components/AppText'
 
 type Props = {}
 
 const LoginScreen = (props: Props) => {
   const [hasAccount, setHasAccount] = useState(true)
   return (
+    <View className='bg-white'>
+    <LanguageSwitch/>
     <View
       style={styles?.container}
-    >
+      >
       <Header />
       <LoginForm hasAccount={hasAccount} />
      <FooterMessage hasAccount={hasAccount} setHasAccount={setHasAccount}/>
     </View>
+      </View>
   )
 }
 
 export default LoginScreen
+
+export const LanguageSwitch = ()=>{
+  return(
+    <Pressable
+    onPress={()=>{
+      // setIsLoading(true)
+        changeLanguage()
+    }}
+    className=' bg-[#71b3cf] rounded-full h-[30px] w-[30px] flex items-center justify-center flex-row gap-2  w-[100px]  px-2'>
+   <Text>
+    {getLocale() === 'ar' ? 'En' :'ع'}
+    </Text>
+   <FontAwesome name="globe" size={24} color="gray" />    
+    </Pressable>
+  )
+}
 const FooterMessage = ({hasAccount,setHasAccount}:{hasAccount:boolean,setHasAccount:()=>void})=>{
   return (
 
     <>
- {!hasAccount ? <Text style={{
-        color: "blue",
+ {!hasAccount ?  <View className='flex flex-row gap-2 items-center justify-center'>
+      <AppText style={{
         textAlign: 'center',
         fontFamily: FONT_FAMILY_NORMAL
-      }}>
-        Have An account? <Pressable onPress={() => setHasAccount(!hasAccount)}>
-          <Text style={{
+      }}
+      textKey="Have an account"
+      />
+      <Pressable onPress={() => setHasAccount(!hasAccount)}>
+          <AppText
+          textKey='Login'
+          style={{
             fontFamily: FONT_FAMILY_BOLD,
-          }
-          }>
+            color: "blue",
 
-            Login Now
-          </Text>
+          }
+          }/>
+
+         
         </Pressable>
-      </Text> : <Text style={{
-        color: "blue",
+      </View> : 
+      <View className='flex flex-row gap-2 items-center justify-center'>
+      <AppText style={{
         textAlign: 'center',
         fontFamily: FONT_FAMILY_NORMAL
-      }}>
-        Don't Have An account? <Pressable onPress={() => setHasAccount(!hasAccount)}>
-          <Text style={{
+      }}
+      textKey="Don't have an account"
+      />
+      <Pressable onPress={() => setHasAccount(!hasAccount)}>
+          <AppText
+          textKey='Create One'
+          style={{
             fontFamily: FONT_FAMILY_BOLD,
-          }
-          }>
+            color: "blue",
 
-            Create One
-          </Text>
+          }
+          }/>
+
+         
         </Pressable>
-      </Text>
+      </View>
       }
     </>
 )

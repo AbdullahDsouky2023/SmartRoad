@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ActivityIndicator, ScrollView, RefreshControl } from 'react-native'
+import { View, Text, FlatList, ActivityIndicator, ScrollView, RefreshControl, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from './components/Header'
 import WalletComponent from './components/WalletComponent'
@@ -12,19 +12,28 @@ import { AntDesign } from '@expo/vector-icons'
 import { useWallet } from '~/api/wallet'
 import TransactionList from './components/TransactionsList'
 import userProfileStore from '~/store/user'
+import { changeLanguage } from '~/localization/helpers'
+import { getLocale } from '~/localization/localize'
+import { Redirect } from 'expo-router'
+import { LanguageSwitch } from '../auth/login/LoginScreen'
 
 const WalletScreen = (props: Props) => {
   const {user_id} = userProfileStore()
   const {wallet,refetch,isLoading} = useWallet(user_id)
   console.log("🚀 ~ WalletScreen ~ data:", wallet)
+  if(!wallet && !isLoading){
+    return <Redirect href={'/loginScreen'}/>
+  }
   return (
     <ScrollView 
+    showsVerticalScrollIndicator={false}
     refreshControl={<RefreshControl onRefresh={refetch} refreshing={isLoading}/>}
     style={{
         backgroundColor:'white',
         flex:1
     }}
     >
+          <LanguageSwitch/>
     <Header/>
     <WalletComponent/>
     <TransactionList/>

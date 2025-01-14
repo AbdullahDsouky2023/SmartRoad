@@ -11,8 +11,8 @@ const AddCharge = (props: Props) => {
     console.log('charge wallet')
 }
   return (
-    <Pressable style={styles.container} onPress={handelChargeWallet}>
-      <AntDesign name="pluscircle" size={60} color="blue" />
+    <Pressable style={styles.container}  className=' z-10'onPress={handelChargeWallet}>
+      {/* <AntDesign name="pluscircle" size={60} color="blue" /> */}
     </Pressable>
   )
 }

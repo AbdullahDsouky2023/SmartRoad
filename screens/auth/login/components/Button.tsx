@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import { FONT_FAMILY_BOLD } from '~/constant/styles'
+import AppText from '~/components/AppText'
 
 type Props = {
     onPress:()=>void
@@ -20,15 +21,16 @@ const Button = ({
          disabled={!disabled}
          onPress={onPress}
          >
-        <Text
+        <AppText
+        textKey=  {title}
         style={{
             color:'white',
             fontSize:20,        fontFamily:FONT_FAMILY_BOLD,
 
         }}
-        >
-            {title}
-        </Text>
+        
+          
+        />
     </Pressable>
   )
 }

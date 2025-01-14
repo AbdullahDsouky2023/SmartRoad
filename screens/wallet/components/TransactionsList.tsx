@@ -11,6 +11,7 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import { format } from 'date-fns';
 import { supabase } from '~/lib/supabase';
+import AppText from '~/components/AppText';
 
 // Sample API call function - replace with your actual API endpoint
 const fetchTransactions = async () => {
@@ -137,10 +138,10 @@ const TransactionList = () => {
         </View>
         <View style={styles.transactionDetails}>
           <View style={styles.topRow}>
-            <Text style={styles.transactionType}>
-              {item.transaction_type.charAt(0).toUpperCase() + 
-               item.transaction_type.slice(1)}
-            </Text>
+            <AppText style={styles.transactionType}
+         textKey=     {item.transaction_type.charAt(0).toUpperCase() + 
+          item.transaction_type.slice(1)}
+            />
             <Text style={styles.amount}>
               ${parseFloat(item.amount).toFixed(2)}
             </Text>
@@ -153,7 +154,7 @@ const TransactionList = () => {
               styles.statusBadge,
               { backgroundColor: getStatusColor(item.status) }
             ]}>
-              <Text style={styles.statusText}>{item.status}</Text>
+              <AppText style={styles.statusText} textKey={item.status}/>
             </View>
           </View>
         </View>
@@ -186,7 +187,7 @@ const TransactionList = () => {
         }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No transactions found</Text>
+            <AppText style={styles.emptyText} textKey='No transactions found'/>
           </View>
         }
       />

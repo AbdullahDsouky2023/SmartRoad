@@ -32,7 +32,7 @@ const ProfileScreen = (props: Props) => {
     }}
     >
    
-      <Button disabled={true} title='ChargeWallet' onPress={handelChargeWallet}/>
+      <Button disabled={true} title='Charge Wallet' onPress={handelChargeWallet}/>
       <Button disabled={true} title='Logout' onPress={handleSignout}/>
     </View>
   )
