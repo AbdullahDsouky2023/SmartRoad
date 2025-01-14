@@ -47,10 +47,8 @@ const index = (props: Props) => {
     return <Redirect href={'/loginScreen'} />
   }else {
       return <Redirect href={'/(tabs)/'} />
-
   }
-
-  // return <Redirect href={'/(tabs)/'} />
+  return <Redirect href={'/(tabs)/'} />
 }
 
 export default index

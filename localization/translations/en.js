@@ -1,7 +1,7 @@
 export default {
   'My Wallet':'My Wallet',
-  'debit':'debit',
-  'credit':'credit',
+  'Debit':'Debit',
+  'Credit':'Credit',
   'completed':'completed',
   'failed':'failed',
   'Logout':'Logout',
@@ -9,7 +9,7 @@ export default {
   'Enter Amount':'Enter Amount',
   'Charge':'Charge',
   'Please Charge with more than 10$': 'Please Charge with more than 10$',
-  "Don't have an account":"Create One",
+  "Don't have an account":"Don't have an account",
   "Login":'Login',
   "Login Now":'Login Now',
   "Register":"Register",
@@ -19,6 +19,9 @@ export default {
   'Please Enter your password': 'Please Enter your password',
   'Please enter a valid email address': 'Please enter a valid email address',
   'Password should be length of 8 or more': 'Password should be length of 8 or more',
-  'No transactions found':'No transactions found'
+  'No transactions found':'No transactions found',
+  'Create One':'Create One',
+  'Have an account':'Have an account',
+  'Registration successful! Please check your email for verification':'Registration successful! Please check your email for verification'
 
 }

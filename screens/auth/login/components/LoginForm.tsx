@@ -7,7 +7,7 @@ import userProfileStore from '~/store/user';
 import { supabase } from '~/lib/supabase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18n from '~/localization/localize';
-
+import {toast} from 'sonner-native'
 type Props = {
     hasAccount: boolean;
 };
@@ -18,19 +18,19 @@ const LoginForm = ({ hasAccount }: Props) => {
 
     const handleValidation = () => {
         if (!email && !password) {
-            Alert.alert(i18n.t('Please Enter your email'));
+           toast.error(i18n.t('Please Enter your email'));
             return false;
         } else if (email && !password) {
-            Alert.alert((i18n.t('Please Enter your password')));
+           toast.error((i18n.t('Please Enter your password')));
             return false;
         } else if (!email && password) {
-            Alert.alert((i18n.t('Please Enter your email')));
+           toast.error((i18n.t('Please Enter your email')));
             return false;
         } else if (!/\S+@\S+\.\S+/.test(email)) {
-            Alert.alert((i18n.t('Please enter a valid email address')));
+           toast.error((i18n.t('Please enter a valid email address')));
             return false;
         } else if (password?.length < 8) {
-            Alert.alert((i18n.t('Password should be length of 8 or more')));
+           toast.error((i18n.t('Password should be length of 8 or more')));
             return false;
         }
         return true;
@@ -61,11 +61,11 @@ const LoginForm = ({ hasAccount }: Props) => {
 
                 if (error) throw error;
 
-                Alert.alert('Registration successful! Please check your email for verification.');
+                toast.success('Registration successful! Please check your email for verification');
             }
         } catch (error: any) {
             console.error('Error registering:', error.message);
-            Alert.alert('Registration failed', error.message);
+            toast.error('Registration failed', error.message);
         }
     };
 
@@ -88,12 +88,12 @@ const LoginForm = ({ hasAccount }: Props) => {
 
                 // Navigate to the next screen
                 router.navigate('/(tabs)/');
-                Alert.alert('Login Successful');
+              toast.success('Login Successful');
             }
                     console.log("🚀 ~ Login ~ userData:", userData)
         } catch (error: any) {
             console.error('Error logging in:', error.message);
-            Alert.alert('Login failed', error.message);
+          toast.error('Login failed', error.message);
         }
     };
 

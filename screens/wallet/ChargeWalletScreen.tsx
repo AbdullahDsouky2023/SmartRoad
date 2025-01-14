@@ -9,7 +9,8 @@ import { useWallet } from '~/api/wallet'
 import userProfileStore from '~/store/user'
 import { supabase } from '~/lib/supabase'
 import AppText from '~/components/AppText'
-
+import {toast} from 'sonner-native'
+import i18n from '../../localization/localize'
 type Props = {}
 
 const ChargeWalletScreen = (props: Props) => {
@@ -30,11 +31,11 @@ const ChargeWalletScreen = (props: Props) => {
                 throw error
             }
 
-            Alert.alert('Wallet charged successfully! New balance: ' + newBalance)
+          toast.succes(i18n.t('Wallet charged successfully!'))
             refetch()
             router.navigate('/(tabs)')
         } catch (error) {
-            Alert.alert('Error charging wallet:', error.message)
+            toast.error('Error charging wallet:', error.message)
         }
     }
 

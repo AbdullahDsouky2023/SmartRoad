@@ -34,9 +34,14 @@ export const LanguageSwitch = ()=>{
     <Pressable
     onPress={()=>{
       // setIsLoading(true)
-        changeLanguage()
+      changeLanguage()
     }}
-    className=' bg-[#71b3cf] rounded-full h-[30px] w-[30px] flex items-center justify-center flex-row gap-2  w-[100px]  px-2'>
+    className=' bg-[#71b3cf] rounded-full h-[30px]  flex items-center justify-center flex-row gap-2   px-2'
+    style={{
+      width:100,
+      marginTop:20
+    }}
+    >
    <Text>
     {getLocale() === 'ar' ? 'En' :'ع'}
     </Text>
