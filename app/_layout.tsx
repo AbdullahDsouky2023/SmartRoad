@@ -56,7 +56,7 @@ export default function RootLayout() {
 			/>
 		</Stack>
 		</QueryClientProvider>
-		{/* <Toaster/> */}
+		<Toaster/>
 				</GestureHandlerRootView>
 		</SafeAreaView>
 		
