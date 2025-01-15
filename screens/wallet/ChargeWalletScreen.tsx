@@ -18,6 +18,7 @@ const ChargeWalletScreen = (props: Props) => {
     const { user_id } = userProfileStore()
     const { wallet, refetch, isLoading } = useWallet(user_id)
     const balance = wallet?.current_balance
+    console.log("🚀 ~ ChargeWalletScreen ~ balance:", balance)
 
     const handleChargeWallet = async () => {
         const newBalance = Number(balance) + Number(text)
@@ -30,11 +31,12 @@ const ChargeWalletScreen = (props: Props) => {
             if (error) {
                 throw error
             }
-
-          toast.succes(i18n.t('Wallet charged successfully!'))
+            
+          toast.success(i18n.t('Wallet charged successfully!'))
             refetch()
             router.navigate('/(tabs)')
         } catch (error) {
+            console.log("🚀 ~ handleChargeWal ~ error:", error)
             toast.error('Error charging wallet:', error.message)
         }
     }
