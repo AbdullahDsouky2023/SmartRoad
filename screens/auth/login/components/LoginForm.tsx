@@ -13,21 +13,18 @@ type Props = {
 };
 
 const LoginForm = ({ hasAccount }: Props) => {
-    const { email, password, setUserField , setUser } = userProfileStore();
-    const dataCompleted = email && password;
+    const { national_id, password, setUserField , setUser } = userProfileStore();
+    const dataCompleted = national_id && password;
 
     const handleValidation = () => {
-        if (!email && !password) {
-           toast.error(i18n.t('Please Enter your email'));
+        if (!national_id && !password) {
+           toast.error(i18n.t('Please Enter your national ID'));
             return false;
-        } else if (email && !password) {
+        } else if (national_id && !password) {
            toast.error((i18n.t('Please Enter your password')));
             return false;
-        } else if (!email && password) {
-           toast.error((i18n.t('Please Enter your email')));
-            return false;
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-           toast.error((i18n.t('Please enter a valid email address')));
+        } else if (!national_id && password) {
+           toast.error((i18n.t('Please Enter your national ID')));
             return false;
         } else if (password?.length < 8) {
            toast.error((i18n.t('Password should be length of 8 or more')));
@@ -42,7 +39,7 @@ const LoginForm = ({ hasAccount }: Props) => {
 
             // First create the auth user
             const { data: authData, error: authError } = await supabase.auth.signUp({
-                email,
+                email: `${national_id}@example.com`, // Assuming a placeholder email for national ID
                 password,
             });
 
@@ -55,7 +52,7 @@ const LoginForm = ({ hasAccount }: Props) => {
                     .insert([
                         {
                             user_id: authData.user.id,
-                            email: email,
+                            national_id: national_id,
                         }
                     ]);
 
@@ -77,33 +74,38 @@ const LoginForm = ({ hasAccount }: Props) => {
             const { data: userData, error: userError } = await supabase
             .from('users')
             .select('*')
-            .eq('email', email)
+            .eq('national_id', national_id)
             .single();
             console.log("🚀 ~ Login ~ userData:", userData)
 
             if (userData) {
-                if (userError) throw userError;
+                if (userError) {
+                    console.log("🚀 ~ Login ~ userError:", userError)
+                    
+                }
                 setUser(userData);
                 
 
                 // Navigate to the next screen
                 router.navigate('/(tabs)/');
-              toast.success('Login Successful');
+              toast.success(i18n.t('Login Successful'));
+            }else {
+                console.log("🚀 ~ Login ~ userData:", userData)
+                toast.error(i18n.t('Invalid Credentials'));
             }
-                    console.log("🚀 ~ Login ~ userData:", userData)
         } catch (error: any) {
             console.error('Error logging in:', error.message);
-          toast.error('Login failed', error.message);
+          toast.error(i18n.t('Login failed'));
         }
     };
 
     return (
         <View className='bg-red-400' style={styles?.container}>
             <CustomInput
-                title='Email'
-                placeholder='Email'
-                text={email}
-                setText={(value) => setUserField('email', value)}
+                title='National ID'
+                placeholder='National ID'
+                text={national_id}
+                setText={(value) => setUserField('national_id', value)}
             />
             <CustomInput
                 title='Password'

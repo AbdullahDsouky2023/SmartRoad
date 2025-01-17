@@ -12,6 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { format } from 'date-fns';
 import { supabase } from '~/lib/supabase';
 import AppText from '~/components/AppText';
+import { getLocale } from '~/localization/localize';
 
 // Sample API call function - replace with your actual API endpoint
 const fetchTransactions = async () => {
@@ -101,6 +102,7 @@ const TransactionList = () => {
   };
 
   const renderTransaction = ({ item, index }) => {
+    console.log("🚀 ~ renderTransaction ~ item:", item)
     const itemFadeAnim = new Animated.Value(0);
     const itemTranslateY = new Animated.Value(50);
 
@@ -143,7 +145,7 @@ const TransactionList = () => {
           item.transaction_type.slice(1)}
             />
             <Text style={styles.amount}>
-              ${parseFloat(item.amount).toFixed(2)}
+        {parseFloat(item.amount).toFixed(2)}   {getLocale() === 'ar' ? 'ج.م' : '$'}
             </Text>
           </View>
           <View style={styles.bottomRow}>
@@ -165,7 +167,7 @@ const TransactionList = () => {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <Text>Loading transactions...</Text>
+        <AppText textKey='Loading transactions' FValue={14} className='font-main text-blue-600 font-bold my-4'/>
       </View>
     );
   }

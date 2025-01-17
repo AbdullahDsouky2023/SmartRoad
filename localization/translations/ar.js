@@ -8,7 +8,7 @@ export default {
   'Charge Wallet': 'شحن المحفظة',
   'Enter Amount': 'أدخل المبلغ',
   'Charge': 'شحن',
-  'Please Charge with more than 10$': 'يرجى شحن أكثر من 10$',
+  'Please Charge with more than 10$': 'يرجى شحن أكثر من 10ج.م',
   "Login": 'تسجيل الدخول',
   "Login Now": 'تسجيل الدخول الآن',
   "Register": 'تسجيل',
@@ -21,4 +21,12 @@ export default {
   "Create One": "أنشئ واحد",
   "Don't have an account": 'ليس لديك حساب',
   "Have an account": "لديك حساب",
+
+  'Wallet charged successfully!': 'محفظة شحنت بنجاح!',
+
+  'National ID': 'الرقم الوطني',
+  'Login Successful': 'تسجيل الدخول ناجح',
+  'Login failed': 'فشل تسجيل الدخول',
+  'Invalid Credentials': 'بيانات غير صحيحة',
+  'Loading transactions': 'جاري تحميل المعاملات...',
 }

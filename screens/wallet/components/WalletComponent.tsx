@@ -7,6 +7,7 @@ import userProfileStore from '~/store/user'
 import AddCharge from '~/components/wallet/AddCharge'
 import { useWallet } from '~/api/wallet'
 import { getAllUsers, getUserData } from '~/api/user'
+import { getLocale } from '~/localization/localize'
 type Props = {}
 
 const {width,height} = Dimensions.get('window')
@@ -51,7 +52,7 @@ const BlanceComponent = ()=>{
         paddingVertical:10
       }}
       >
-        {wallet?.current_balance} $
+        {wallet?.current_balance} {getLocale() === 'ar' ? 'ج.م' : '$'}
       </Text>
     )
 }

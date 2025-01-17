@@ -32,7 +32,20 @@ const ChargeWalletScreen = (props: Props) => {
                 throw error
             }
             
-          toast.success(i18n.t('Wallet charged successfully!'))
+            // Create a new transaction in the 'transactions' table
+            // const { error: transactionError } = await supabase
+            //     .from('transactions')
+            //     .insert({
+            //         amount: text,
+            //         transaction_type: 'credit',
+            //         wallet_id: wallet.id
+            //     })
+
+            // if (transactionError) {
+            //     throw transactionError
+            // }
+            
+            toast.success(i18n.t('Wallet charged successfully!'))
             refetch()
             router.navigate('/(tabs)')
         } catch (error) {

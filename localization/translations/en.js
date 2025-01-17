@@ -22,6 +22,13 @@ export default {
   'No transactions found':'No transactions found',
   'Create One':'Create One',
   'Have an account':'Have an account',
-  'Registration successful! Please check your email for verification':'Registration successful! Please check your email for verification'
+  'Registration successful! Please check your email for verification':'Registration successful! Please check your email for verification',
+  'Wallet charged successfully!': 'Wallet charged successfully!',
+  'National ID':'National ID',
+  'Login Successful':'Login Successful',
+  'Login failed':'Login failed',
+  'Invalid Credentials': 'Invalid Credentials',
+  'Loading transactions': 'Loading transactions'
+
 
 }
